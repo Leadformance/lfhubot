@@ -6,7 +6,7 @@ module.exports = (robot) ->
     url         = "https://sites.google.com/a/leadformance.com/product/roles"
     msg.send url
 
-  robot.respond /who has (.*) role$/i, (msg) ->
+  robot.respond /who has (.*) role/i, (msg) ->
     role_name = msg.match[1]
 
     response = []
