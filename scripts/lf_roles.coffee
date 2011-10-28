@@ -1,6 +1,9 @@
 # Interacts with the Google Maps API.
 #
-# lf roles - LEADFORMANCE: Returns a link to leadformance roles.
+# lf roles        - LEADFORMANCE: Returns a link to leadformance roles.
+# who has * role  - LEADFORMANCE: Returns user which the same role
+# possible roles  - LEADFORMANCE: Returns a list of roles used
+
 module.exports = (robot) ->
   robot.respond /.*lf roles/i, (msg) ->
     url         = "https://sites.google.com/a/leadformance.com/product/roles"
@@ -32,8 +35,6 @@ module.exports = (robot) ->
 
     response = [].concat.apply([], response).unique().join(", ")
     msg.send response
-
-
 
 
 Array::unique = ->
