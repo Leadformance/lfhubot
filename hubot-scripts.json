@@ -1,1 +1,3 @@
-["redis-brain.coffee", "tweet.coffee", "shipit.coffee", "ascii.coffee", "eight-ball.coffee", "likeaboss.coffee", "lolz.coffee", "remind.coffee", "sudo.coffee", "directions.coffee", "newrelic.coffee", "polite.coffee", "uptime.coffee", "weather.coffee", "adult.coffee", "meme_generator.coffee", "jenkins.coffee", "pivotalstorylisten.coffee", "twss.coffee", "news.coffee", "urban.coffee", "airbrake.coffee", "commitmessage.coffee", "pivotal.coffee"]
+["redis-brain.coffee", "tweet.coffee", "shipit.coffee", "ascii.coffee", "eight-ball.coffee", "likeaboss.coffee", "lolz.coffee", "remind.coffee", "sudo.coffee", "directions.coffee", "newrelic.coffee", "polite.coffee", "uptime.coffee", "weather.coffee", "adult.coffee", "meme_generator.coffee", "jenkins.coffee", "twss.coffee", "news.coffee", "urban.coffee", "airbrake.coffee", "commitmessage.coffee", "pivotal.coffee"]
+
+# pivotalstorylisten.coffee
