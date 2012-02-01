@@ -19,7 +19,8 @@
     "optparse": "1.0.3",
     "scoped-http-client": "0.9.6",
     "log": "1.2.0",
-    "connect": "1.8.5"
+    "connect": "1.8.5",
+    "hubot-scripts": "2.0.4"
   },
 
   "main": "./index",
