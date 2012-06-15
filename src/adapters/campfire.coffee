@@ -1,11 +1,11 @@
-Robot        = require '../robot'
-Adapter      = require '../adapter'
+HTTPS          = require 'https'
+{EventEmitter} = require 'events'
 
-HTTPS        = require 'https'
-EventEmitter = require('events').EventEmitter
+Robot                                   = require '../robot'
+Adapter                                 = require '../adapter'
+{TextMessage,EnterMessage,LeaveMessage} = require '../message'
 
 class Campfire extends Adapter
-
   send: (user, strings...) ->
     if strings.length > 0
       @bot.Room(user.room).speak strings.shift(), (err, data) =>
@@ -40,15 +40,15 @@ class Campfire extends Adapter
 
     bot.on "TextMessage", withAuthor (id, created, room, user, body, author) ->
       unless bot.info.id == author.id
-        self.receive new Robot.TextMessage(author, body)
+        self.receive new TextMessage(author, body)
 
     bot.on "EnterMessage", withAuthor (id, created, room, user, body, author) ->
       unless bot.info.id == author.id
-        self.receive new Robot.EnterMessage(author)
+        self.receive new EnterMessage(author)
 
     bot.on "LeaveMessage", withAuthor (id, created, room, user, body, author) ->
       unless bot.info.id == author.id
-        self.receive new Robot.LeaveMessage(author)
+        self.receive new LeaveMessage(author)
 
     bot.Me (err, data) ->
       bot.info = data.user
@@ -64,6 +64,8 @@ class Campfire extends Adapter
         bot.Room(roomId).listen()
 
     @bot = bot
+
+    self.emit "connected"
 
 exports.use = (robot) ->
   new Campfire robot
@@ -167,8 +169,8 @@ class CampfireStreaming extends EventEmitter
                 try
                   data = JSON.parse part
                   self.emit data.type, data.id, data.created_at, data.room_id, data.user_id, data.body
-                catch err
-                  logger.error "Campfire error: #{err}"
+                catch error
+                  logger.error "Campfire error: #{error}\n#{error.stack}"
 
         response.on "end", ->
           logger.error "Streaming connection closed for room #{id}. :("
@@ -233,7 +235,7 @@ class CampfireStreaming extends EventEmitter
 
         try
           callback null, JSON.parse(data)
-        catch err
+        catch error
           callback null, data or { }
 
       response.on "error", (err) ->
@@ -247,4 +249,3 @@ class CampfireStreaming extends EventEmitter
 
     request.on "error", (err) ->
       logger.error "Campfire request error: #{err}"
-

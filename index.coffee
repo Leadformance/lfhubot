@@ -1,20 +1,23 @@
-# This is the Hubot Loading Bay.  NPM uses it as an entry point.
-#
-#     Hubot = require 'hubot'
-#     YourBot = Hubot.robot 'campfire', 'yourbot'
+User                                                    = require './src/user'
+Brain                                                   = require './src/brain'
+Robot                                                   = require './src/robot'
+Adapter                                                 = require './src/adapter'
+Response                                                = require './src/response'
+{Listener,TextListener}                                 = require './src/listener'
+{TextMessage,EnterMessage,LeaveMessage,CatchAllMessage} = require './src/message'
 
-# Loads a Hubot robot
-exports.loadBot = (adapterPath, adapterName, enableHttpd, botName) ->
+module.exports.loadBot = (adapterPath, adapterName, enableHttpd, botName) ->
   robot = require './src/robot'
   new robot adapterPath, adapterName, enableHttpd, botName
 
-exports.robot = ->
-  require './src/robot'
-
-exports.adapter = ->
-  require './src/adapter'
-
-# Loads the Hubot test harness.
-exports.tests = ->
-  require './test/tests'
-
+module.exports.User            = User
+module.exports.Brain           = Brain
+module.exports.Robot           = Robot
+module.exports.Adapter         = Adapter
+module.exports.Response        = Response
+module.exports.Listener        = Listener
+module.exports.TextListener    = TextListener
+module.exports.TextMessage     = TextMessage
+module.exports.EnterMessage    = EnterMessage
+module.exports.LeaveMessage    = LeaveMessage
+module.exports.CatchAllMessage = CatchAllMessage
