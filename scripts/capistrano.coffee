@@ -2,8 +2,8 @@
 #   Deploy with capistrano
 #
 # Commands:
-#   deploy <stage> <branch>
-#   what can you deploy?
+#  hubot deploy <stage> <branch>
+#  hubot  what can you deploy?
 
 
 #hackers = [
@@ -42,10 +42,16 @@ module.exports = (robot) ->
           msg.send 'Something went horribly wrong'
         else
           msg.send 'Deployed like a boss'
-#          msg.send 'http://hubot-assets.s3.amazonaws.com/fuck-yeah/3.gif'
+          msg.send body
+#         msg.send 'http://hubot-assets.s3.amazonaws.com/fuck-yeah/3.gif'
     else
       msg.send 'Nope. I dont know what that is. Try deploying one of these: ' + stage.join(", ")
 
 
   robot.respond /(what can you deploy?)/i, (msg) ->
     msg.send 'I can deploy the shit out of ' + stage.join(", ")
+
+  robot.respond /(test)/i, (msg) ->
+    msg.http("http://localhost:4567/")
+    .get() (error, response, body) ->
+      msg.send body
