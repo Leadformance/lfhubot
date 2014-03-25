@@ -31,10 +31,7 @@ stage = [
 module.exports = (robot) ->
   robot.respond /deploy (.*) (.*)/i, (msg) ->
     if msg.match[1] in stage
-      #send waiting messages
       msg.send 'Attempting deploy. Please hold.'
-      #msg.send msg.random hackers
-
       #hit the sinatra app to do the deploy
       msg.http("http://localhost:4567/deploy/#{msg.match[1]}/#{msg.match[2]}")
       .get() (err, res, body) ->
@@ -43,7 +40,6 @@ module.exports = (robot) ->
         else
           msg.send 'Deployed like a boss'
           msg.send body
-#         msg.send 'http://hubot-assets.s3.amazonaws.com/fuck-yeah/3.gif'
     else
       msg.send 'Nope. I dont know what that is. Try deploying one of these: ' + stage.join(", ")
 
@@ -55,3 +51,31 @@ module.exports = (robot) ->
     msg.http("http://localhost:4567/")
     .get() (error, response, body) ->
       msg.send body
+
+  robot.hear /(.*)@(.*): The build passed.(.*)/i, (msg) ->
+    switch msg.match[2]
+      when "development" 
+        msg.send "Deploying on the staging server."
+        msg.http("http://localhost:4567/deploy/staging/development")
+        .get() (err, res, body) ->
+          if res.statusCode == 404
+            msg.send 'Something went horribly wrong'
+          else
+            msg.send body
+      when "release" 
+        msg.send "Deploying on the qa server."
+        msg.http("http://localhost:4567/deploy/qa/release")
+        .get() (err, res, body) ->
+          if res.statusCode == 404
+            msg.send 'Something went horribly wrong'
+          else
+            msg.send body
+      when "production" 
+        msg.send "Deploying on the prelive server."
+        msg.http("http://localhost:4567/deploy/prelive/production")
+        .get() (err, res, body) ->
+          if res.statusCode == 404
+            msg.send 'Something went horribly wrong'
+          else
+            msg.send body
+      else msg.send "I can't autodeploy that branch sir !"
