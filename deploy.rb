@@ -18,6 +18,6 @@ get '/deploy/:stage/:branch' do
       f.write log.join
   end
   html = IO.popen("cat "+logfile+" | bin/ansi2html.sh --bg=dark > "+loghtml)
-  "Deploy Traces : "+url+loghtml
+  "Deployed ! Traces : "+url+loghtml
 end
 

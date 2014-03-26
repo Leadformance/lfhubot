@@ -52,27 +52,27 @@ module.exports = (robot) ->
     .get() (error, response, body) ->
       msg.send body
 
-  robot.hear /(.*)@(.*): The build passed.(.*)/i, (msg) ->
+  robot.hear /(.*)@(.*):(.*) The build passed.(.*)/i, (msg) ->
     switch msg.match[2]
       when "development" 
-        msg.send "Deploying on the staging server."
-        msg.http("http://localhost:4567/deploy/staging/development")
+        msg.send "Deploying #{msg.match[3]} on the staging server."
+        msg.http("http://localhost:4567/deploy/staging/#{msg.match[3]}")
         .get() (err, res, body) ->
           if res.statusCode == 404
             msg.send 'Something went horribly wrong'
           else
             msg.send body
       when "release" 
-        msg.send "Deploying on the qa server."
-        msg.http("http://localhost:4567/deploy/qa/release")
+        msg.send "Deploying #{msg.match[3]} on the qa server."
+        msg.http("http://localhost:4567/deploy/qa/#{msg.match[3]}")
         .get() (err, res, body) ->
           if res.statusCode == 404
             msg.send 'Something went horribly wrong'
           else
             msg.send body
       when "production" 
-        msg.send "Deploying on the prelive server."
-        msg.http("http://localhost:4567/deploy/prelive/production")
+        msg.send "Deploying #{msg.match[3]} on the prelive server."
+        msg.http("http://localhost:4567/deploy/prelive/#{msg.match[3]}")
         .get() (err, res, body) ->
           if res.statusCode == 404
             msg.send 'Something went horribly wrong'
