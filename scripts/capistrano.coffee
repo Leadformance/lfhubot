@@ -21,7 +21,7 @@ stage = [
   "staging",
   "qa",
   "clientqa"
-  "preprod"
+  "prelive"
   "production"
   "sandbox"
   "integrator"
