@@ -15,12 +15,7 @@ get '/deploy/:stage/:branch' do
 
   cmd = "cd ~/apps/bridge;"
 
-  if %w(feature production).include?(params[:stage])
-    cmd += "git checkout development; git pull origin development"
-  else
-    # 2.89 is the latest tag pointing to 1.9.3-p327
-    cmd += "git checkout 2.89"
-  end
+  cmd += "git checkout #{params[:branch]}; git pull origin #{params[:branch]}"
 
   cmd = IO.popen("#{cmd}; #{cap} #{params[:stage]} deploy tag=#{params[:branch]}")
   log = cmd.readlines
