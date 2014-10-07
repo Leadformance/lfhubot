@@ -53,8 +53,8 @@ module.exports = (robot) ->
       msg.send body
 
   robot.hear /(.*)@(.*):(.*) The build passed.(.*)/i, (msg) ->
-    if msg.match[2] == "development"
-      msg.send "Deploying #{msg.match[3]} on the staging server."
+    if msg.match[2] == "master"
+      msg.send "Deploying #{msg.match[3]} on the prelive server (temporary)."
       msg.http("http://localhost:4567/deploy/prelive/#{msg.match[3]}")
       .get() (err, res, body) ->
         if res.statusCode == 404

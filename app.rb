@@ -16,7 +16,7 @@ get '/deploy/:stage/:branch' do
   cmd = "cd ~/apps/bridge;"
 
   if %w(prelive staging sandbox feature qa production).include?(params[:stage])
-    cmd += "git checkout development; git pull origin development"
+    cmd += "git checkout master; git pull origin master"
   else
     # 2.89 is the latest tag pointing to 1.9.3-p327
     cmd += "git checkout 2.89"
