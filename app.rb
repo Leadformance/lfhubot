@@ -15,7 +15,7 @@ get '/deploy/:stage/:branch' do
 
   cmd = "cd ~/apps/bridge;"
 
-  if %w(feature production).include?(params[:stage])
+  if %w(prelive staging sandbox feature qa production).include?(params[:stage])
     cmd += "git checkout development; git pull origin development"
   else
     # 2.89 is the latest tag pointing to 1.9.3-p327
@@ -29,6 +29,6 @@ get '/deploy/:stage/:branch' do
     f.write log.join
   end
 
-  html = IO.popen("cat #{logfile} | bin/ansi2html.sh --bg=dark > #{loghtml}")
+  IO.popen("cat #{logfile} | bin/ansi2html.sh --bg=dark > #{loghtml}")
   "Deployed ! Traces : #{url}#{loghtml}"
 end
