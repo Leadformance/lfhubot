@@ -13,7 +13,7 @@ get '/deploy/:stage/:branch' do
   logfile = "log/deploy-#{timestamp}.log"
   loghtml = "log/deploy-#{timestamp}.html"
 
-  cmd = IO.popen("cd #{path} && git pull origin master && #{cap} #{params[:stage]} deploy tag=#{params[:branch]}")
+  cmd = IO.popen("cd ~/apps/bridge && #{cap} #{params[:stage]} deploy tag=#{params[:branch]}")
   log = cmd.readlines
 
   File.open(logfile, 'w') do |f|
