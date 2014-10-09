@@ -13,16 +13,7 @@ get '/deploy/:stage/:branch' do
   logfile = "log/deploy-#{timestamp}.log"
   loghtml = "log/deploy-#{timestamp}.html"
 
-  cmd = "cd ~/apps/bridge;"
-
-  if %w(prelive staging sandbox feature qa production).include?(params[:stage])
-    cmd += "git checkout master; git pull origin master"
-  else
-    # 2.89 is the latest tag pointing to 1.9.3-p327
-    cmd += "git checkout 2.89"
-  end
-
-  cmd = IO.popen("#{cmd}; #{cap} #{params[:stage]} deploy tag=#{params[:branch]}")
+  cmd = IO.popen("cd #{path} && git pull && #{cap} #{params[:stage]} deploy tag=#{params[:branch]}")
   log = cmd.readlines
 
   File.open(logfile, 'w') do |f|
