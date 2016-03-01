@@ -25,6 +25,7 @@ stage = [
   "production"
   "sandbox"
   "integrator"
+  "ssl"
   "feature"
 ]
 
